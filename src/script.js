@@ -6,7 +6,9 @@ async function displayJobs() {
     let boxDecoration = jobList[i].featured ? "block" : "hidden";
     let newLogo = jobList[i].new ? "block" : "hidden";
     let gridGap = jobList[i].new ? "gap-2.5" : "gap-[1.1875rem]";
-    let headerGap = jobList[i].new ? "space-y-3 lg:space-y-1.5" : "space-y-3.5 lg:space-y-2";
+    let headerGap = jobList[i].new
+      ? "space-y-3 lg:space-y-1.5"
+      : "space-y-3.5 lg:space-y-2";
     let marginTop = jobList[i].new ? "mt-1" : "mt-[-0.375rem]";
     let headerMt = jobList[i].new ? "" : "mt-[0.3125rem] lg:mt-[0.25rem]";
 
@@ -16,12 +18,12 @@ async function displayJobs() {
     let toolsSpan = "";
 
     for (let j = 0; j < devLanguages.length; j++) {
-      langSpan += `<span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devLanguages[j]}</span>`;
+      langSpan += `<span class="job_language bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devLanguages[j]}</span>`;
     }
 
     if (devTools.length !== 0) {
       for (let k = 0; k < devTools.length; k++) {
-        toolsSpan += `<span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devTools[k]}</span>`;
+        toolsSpan += `<span class="job_tool bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devTools[k]}</span>`;
       }
     }
 
@@ -71,14 +73,13 @@ async function displayJobs() {
         <div
           class="relative flex flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
         >
-          <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
+          <span class="job_role bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
             >${jobList[i].role}</span
           >
-          <!--  class="bg-[#eef6f6]"Level -->
-          <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
+          <span class="job_level bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
             >${jobList[i].level}</span
           >
-          <!--  class="bg-[#eef6f6]"Languages -->
+          <!-- Languages -->
           ${langSpan} ${toolsSpan}
         </div>
         <!-- Item End -->
@@ -86,24 +87,73 @@ async function displayJobs() {
         `;
   }
 
-  const jobListings = document.querySelectorAll(".job_listing")
-  
-  return jobListings
+  const jobListings = document.querySelectorAll(".job_listing");
+  const jobRoles = document.querySelectorAll(".job_role");
+  const jobLevels = document.querySelectorAll(".job_level");
+  const jobLanguages = document.querySelectorAll(".job_language");
+  const jobTools = document.querySelectorAll(".job_tool");
+
+  console.log(jobLanguages);
+
+  jobRoles.forEach((role) => {
+    role.addEventListener("click", addFilter);
+  });
+
+  jobLevels.forEach((level) => {
+    level.addEventListener("click", addFilter);
+  });
+
+  jobLanguages.forEach((language) => {
+    language.addEventListener("click", addFilter);
+  });
+
+  jobTools.forEach((tool) => {
+    tool.addEventListener("click", addFilter);
+  });
+
+  function addFilter(event) {
+    let filterTarget = event.target.innerHTML;
+   
+    let filterSpan = document.createElement("div");
+    filterSpan.innerHTML = `         
+          <div class="flex items-center">
+            <span class="bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">${filterTarget}</span>
+            <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">
+          </div>`;
+    filterBox.appendChild(filterSpan);
+
+    jobListings.forEach((listing, index) => {
+      if (jobRoles[index].innerText !== filterTarget) {
+        console.log(jobRoles[index].innerHTML);
+        listing.style.display = "none";
+      }
+    });
+
+    const closeFilter = document.querySelectorAll(".close_filter");
+
+    closeFilter.forEach((icon) => {
+      icon.addEventListener("mouseenter", () => {
+        icon.style.backgroundColor = "black";
+      });
+      icon.addEventListener("mouseout", () => {
+        icon.style.backgroundColor = "#5ba4a4";
+      });
+    });
+
+    jobRoles.forEach((role) => {
+      role.removeEventListener("click", addFilter);
+    });
+  }
 }
 
 displayJobs();
 
-let listings = displayJobs()
+clearFilters.addEventListener("click", () => {
+  filtersContainer.style.display = "none";
 
-console.log(listings)
+  const filters = document.querySelectorAll(".filter");
 
-
-clearFilters.addEventListener("click",() => {
-  filtersContainer.style.display = "none"
-
-  const filters = document.querySelectorAll(".filter")
-
-  filters.forEach(filter => {
-    filtersContainer.removeChild(filter)
-  })
-})
+  filters.forEach((filter) => {
+    filtersContainer.removeChild(filter);
+  });
+});
