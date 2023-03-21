@@ -17,7 +17,17 @@
     <link rel="stylesheet" href="../dist/output.css" />
   </head>
   <body>
-    <header class="w-full h-[9.75rem]"></header>
+    <header class="w-full h-[9.75rem] px-6 flex flex-col justify-end lg:px-[10.25rem]">
+      <div id="filtersContainer" class="bg-[white] w-full h-fit translate-y-[50%] flex justify-between items-center px-10 py-5 rounded-md">
+        <div class="filter">
+          <div class="flex items-center">
+            <span class="bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">Frontend</span>
+            <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">
+          </div>
+        </div>
+        <button id="clearFilters" class="text-[#5ba4a4] text-sm font-bold tracking-tighter hover:cursor-pointer hover:underline">Clear</button>
+      </div>
+    </header>
 
     <main id="list" class="grid gap-10 bg-[#effafa] px-6 py-14 lg:px-[10.25rem] lg:py-[4.625rem] lg:gap-6">
 

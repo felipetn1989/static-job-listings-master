@@ -27,7 +27,7 @@ async function displayJobs() {
 
     list.innerHTML += `
       <div
-        class="grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
+        class="job_listing grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
       >
         <div
           class="${boxDecoration} absolute h-full left-0 top-0 w-[0.3125rem] bg-[#5ba4a4] rounded-l-md "
@@ -85,6 +85,25 @@ async function displayJobs() {
       </div>
         `;
   }
+
+  const jobListings = document.querySelectorAll(".job_listing")
+  
+  return jobListings
 }
 
 displayJobs();
+
+let listings = displayJobs()
+
+console.log(listings)
+
+
+clearFilters.addEventListener("click",() => {
+  filtersContainer.style.display = "none"
+
+  const filters = document.querySelectorAll(".filter")
+
+  filters.forEach(filter => {
+    filtersContainer.removeChild(filter)
+  })
+})
