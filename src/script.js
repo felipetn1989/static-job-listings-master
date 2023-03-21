@@ -1,5 +1,3 @@
-/* https://api.npoint.io/8162247b84ab695d6a5e */
-
 async function displayJobs() {
   const response = await fetch("https://api.npoint.io/8162247b84ab695d6a5e");
   const jobList = await response.json();
@@ -17,19 +15,15 @@ async function displayJobs() {
     let devTools = [...jobList[i].tools];
     let toolsSpan = "";
 
-    console.log(devTools);
-
     for (let j = 0; j < devLanguages.length; j++) {
-      langSpan += `<span class="bg-[#eef6f6] p-1.5 w-fit rounded-md">${devLanguages[j]}</span>`;
+      langSpan += `<span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devLanguages[j]}</span>`;
     }
 
     if (devTools.length !== 0) {
       for (let k = 0; k < devTools.length; k++) {
-        toolsSpan += `<span class="bg-[#eef6f6] p-1.5 w-fit rounded-md">${devTools[k]}</span>`;
+        toolsSpan += `<span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devTools[k]}</span>`;
       }
     }
-
-    console.log(toolsSpan);
 
     list.innerHTML += `
       <div
@@ -59,7 +53,7 @@ async function displayJobs() {
                 >
               </div>
             </div>
-            <h1 class="text-[#2c3a3a] text-xs tracking-tight lg:text-lg lg:tracking-tighter">
+            <h1 class="text-[#2c3a3a] text-xs tracking-tight lg:text-lg lg:tracking-tighter hover:cursor-pointer hover:text-[#5ba4a4]">
               ${jobList[i].position}
             </h1>
             <div
@@ -77,11 +71,11 @@ async function displayJobs() {
         <div
           class="relative flex flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
         >
-          <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md"
+          <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
             >${jobList[i].role}</span
           >
           <!--  class="bg-[#eef6f6]"Level -->
-          <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md"
+          <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
             >${jobList[i].level}</span
           >
           <!--  class="bg-[#eef6f6]"Languages -->
