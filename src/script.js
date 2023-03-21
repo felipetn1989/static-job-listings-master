@@ -8,9 +8,9 @@ async function displayJobs() {
     let boxDecoration = jobList[i].featured ? "block" : "hidden";
     let newLogo = jobList[i].new ? "block" : "hidden";
     let gridGap = jobList[i].new ? "gap-2.5" : "gap-[1.1875rem]";
-    let headerGap = jobList[i].new ? "space-y-3" : "space-y-3.5";
+    let headerGap = jobList[i].new ? "space-y-3 lg:space-y-1.5" : "space-y-3.5 lg:space-y-2";
     let marginTop = jobList[i].new ? "mt-1" : "mt-[-0.375rem]";
-    let headerMt = jobList[i].new ? "" : "mt-[0.3125rem]";
+    let headerMt = jobList[i].new ? "" : "mt-[0.3125rem] lg:mt-[0.25rem]";
 
     let devLanguages = [...jobList[i].languages];
     let langSpan = "";
@@ -33,20 +33,20 @@ async function displayJobs() {
 
     list.innerHTML += `
       <div
-        class="grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex"
+        class="grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex lg:items-center lg:px-10 lg:gap-6"
       >
         <div
-          class="${boxDecoration} absolute h-full left-0 w-[0.3125rem] bg-[#5ba4a4] rounded-l-md"
+          class="${boxDecoration} absolute h-full left-0 top-0 w-[0.3125rem] bg-[#5ba4a4] rounded-l-md "
         ></div>
         <!-- Item Start -->
         <img
-          class="absolute top-[-1.5rem] left-6 w-12 lg:relative lg:top-[unset] lg:left-[unset]"
+          class="absolute top-[-1.5rem] left-6 w-12 lg:relative lg:top-[unset] lg:left-[unset] lg:w-[5.5rem]"
           src="${jobList[i].logo}"
           alt="${jobList[i].company} logo"
         />
-        <div class="grid ${headerGap} ${headerMt}">
-          <div class="flex items-center gap-6">
-            <span class="text-xs tracking-tight">${jobList[i].company}</span>
+        <div class="grid ${headerGap} ${headerMt} lg:self-start lg:space-y-1.5">
+          <div class="flex items-center gap-6 lg:gap-5">
+            <span class="text-xs tracking-tight lg:text-sm">${jobList[i].company}</span>
             <div class="flex items-center gap-2">
               <span
                 class="${newLogo} bg-[#5ba4a4] text-white text-xs uppercase py-1 px-2 rounded-full tracking-tighter"
@@ -58,11 +58,11 @@ async function displayJobs() {
               >
             </div>
           </div>
-          <h1 class="text-[#2c3a3a] text-xs tracking-tight">
+          <h1 class="text-[#2c3a3a] text-xs tracking-tight lg:text-lg lg:tracking-tighter">
             ${jobList[i].position}
           </h1>
           <div
-            class="flex items-center gap-2 text-[#7b8e8e] font-sans font-semibold text-[0.875rem] border-b border-b-[#7b8e8e] pb-5 ${marginTop}"
+            class="flex items-center gap-2 text-[#7b8e8e] font-sans font-semibold text-[0.875rem] border-b border-b-[#7b8e8e] pb-5 ${marginTop} lg:border-b-0 lg:text-base lg:gap-[1.125rem] lg:tracking-tight lg:pb-0"
           >
             <span>${jobList[i].postedAt}</span>
             <div class="h-1 w-1 rounded-full bg-[#7b8e8e]"></div>
@@ -73,7 +73,7 @@ async function displayJobs() {
         </div>
         <!-- Role -->
         <div
-          class="flex flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
+          class="relative flex flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
         >
           <span class="bg-[#eef6f6] p-1.5 w-fit rounded-md"
             >${jobList[i].role}</span
