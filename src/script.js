@@ -93,8 +93,6 @@ async function displayJobs() {
   const jobLanguages = document.querySelectorAll(".job_language");
   const jobTools = document.querySelectorAll(".job_tool");
 
-  console.log(jobLanguages);
-
   jobRoles.forEach((role) => {
     role.addEventListener("click", addFilter);
   });
@@ -123,15 +121,15 @@ async function displayJobs() {
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
-      if (
+/*       if (
         jobRoles[index].innerHTML === filterTarget ||
         jobLevels[index].innerHTML === filterTarget
       ) {
         listing.style.display = window.innerWidth > 1024 ? "flex" : "grid"
       } else {
         listing.style.display = "none";
-      }
-      console.log(filterTarget)
+      } */
+      console.log(jobLanguages[0].innerHTML);
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
