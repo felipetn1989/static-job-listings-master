@@ -115,11 +115,10 @@ async function displayJobs() {
     let filterTarget = event.target.innerHTML;
 
     let filterSpan = document.createElement("div");
+    filterSpan.setAttribute("class", "filter flex items-center mb-4");
     filterSpan.innerHTML = `         
-          <div class="flex items-center mb-4">
             <span class="bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">${filterTarget}</span>
-            <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">
-          </div>`;
+            <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">`;
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
@@ -153,12 +152,20 @@ async function displayJobs() {
 
 displayJobs();
 
-clearFilters.addEventListener("click", () => {
-  filtersContainer.style.display = "none";
+const filterBox = document.querySelector("#filterBox");
 
+clearFilters.addEventListener("click", () => {
   const filters = document.querySelectorAll(".filter");
+  const jobListings = document.querySelectorAll(".job_listing");
 
   filters.forEach((filter) => {
-    filtersContainer.removeChild(filter);
+    filterBox.removeChild(filter);
   });
+
+  jobListings.forEach((listing) => {
+    listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+  });
+
+  filtersContainer.classList.remove("flex");
+  filtersContainer.classList.add("hidden");
 });
