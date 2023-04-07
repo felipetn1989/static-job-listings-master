@@ -110,26 +110,32 @@ async function displayJobs() {
   });
 
   function addFilter(event) {
+    filtersContainer.classList.remove("hidden");
+    filtersContainer.classList.add("flex");
     let filterTarget = event.target.innerHTML;
 
     let filterSpan = document.createElement("div");
     filterSpan.innerHTML = `         
-          <div class="flex items-center">
+          <div class="flex items-center mb-4">
             <span class="bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">${filterTarget}</span>
             <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">
           </div>`;
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
-/*       if (
-        jobRoles[index].innerHTML === filterTarget ||
-        jobLevels[index].innerHTML === filterTarget
-      ) {
-        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid"
+      if (jobRoles[index].innerHTML === filterTarget) {
+        jobRoles.forEach((role) => {
+          role.removeEventListener("click", addFilter);
+        });
+        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+      } else if (jobLevels[index].innerHTML === filterTarget) {
+        jobLevels.forEach((level) => {
+          level.removeEventListener("click", addFilter);
+        });
+        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
       } else {
         listing.style.display = "none";
-      } */
-      console.log(jobLanguages[0].innerHTML);
+      }
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
@@ -141,10 +147,6 @@ async function displayJobs() {
       icon.addEventListener("mouseout", () => {
         icon.style.backgroundColor = "#5ba4a4";
       });
-    });
-
-    jobRoles.forEach((role) => {
-      role.removeEventListener("click", addFilter);
     });
   }
 }
