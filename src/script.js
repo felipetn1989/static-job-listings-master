@@ -113,6 +113,7 @@ async function displayJobs() {
     filtersContainer.classList.remove("hidden");
     filtersContainer.classList.add("flex");
     let filterTarget = event.target.innerHTML;
+    console.log(filterTarget);
 
     let filterSpan = document.createElement("div");
     filterSpan.setAttribute("class", "filter flex items-center mb-4");
@@ -122,12 +123,18 @@ async function displayJobs() {
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
-      if (jobRoles[index].innerHTML === filterTarget) {
+      if (
+        jobRoles[index].innerHTML === filterTarget &&
+        listing.style.display !== "none"
+      ) {
         jobRoles.forEach((role) => {
           role.removeEventListener("click", addFilter);
         });
         listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-      } else if (jobLevels[index].innerHTML === filterTarget) {
+      } else if (
+        jobLevels[index].innerHTML === filterTarget &&
+        listing.style.display !== "none"
+      ) {
         jobLevels.forEach((level) => {
           level.removeEventListener("click", addFilter);
         });
@@ -174,4 +181,3 @@ async function displayJobs() {
 }
 
 displayJobs();
-
