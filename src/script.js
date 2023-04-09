@@ -71,7 +71,7 @@ async function displayJobs() {
         </div>
         <!-- Role -->
         <div
-          class="relative flex flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
+          class="relative flex items-center flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
         >
           <span class="job_role bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
             >${jobList[i].role}</span
@@ -80,7 +80,7 @@ async function displayJobs() {
             >${jobList[i].level}</span
           >
           <!-- Languages -->
-          ${langSpan} ${toolsSpan}
+          <div class="languages_tools flex gap-5"> ${langSpan} ${toolsSpan} </div>
         </div>
         <!-- Item End -->
       </div>
@@ -92,6 +92,7 @@ async function displayJobs() {
   const jobLevels = document.querySelectorAll(".job_level");
   const jobLanguages = document.querySelectorAll(".job_language");
   const jobTools = document.querySelectorAll(".job_tool");
+  const langTools = document.querySelectorAll(".languages_tools");
 
   jobRoles.forEach((role) => {
     role.addEventListener("click", addFilter);
@@ -101,19 +102,14 @@ async function displayJobs() {
     level.addEventListener("click", addFilter);
   });
 
-  jobLanguages.forEach((language) => {
-    language.addEventListener("click", addFilter);
-  });
-
-  jobTools.forEach((tool) => {
-    tool.addEventListener("click", addFilter);
+  langTools.forEach((langTool) => {
+    langTool.addEventListener("click", addFilter);
   });
 
   function addFilter(event) {
     filtersContainer.classList.remove("hidden");
     filtersContainer.classList.add("flex");
     let filterTarget = event.target.innerHTML;
-    console.log(filterTarget);
 
     let filterSpan = document.createElement("div");
     filterSpan.setAttribute("class", "filter flex items-center mb-4");
@@ -137,6 +133,15 @@ async function displayJobs() {
       ) {
         jobLevels.forEach((level) => {
           level.removeEventListener("click", addFilter);
+        });
+        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+      } else if (
+        langTools[index].innerHTML === filterTarget &&
+        listing.style.display !== "none"
+      ) {
+        console.log(langTools[index].innerHTML)
+        langTools.forEach((langTool) => {
+          langTool.removeEventListener("click", addFilter);
         });
         listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
       } else {
