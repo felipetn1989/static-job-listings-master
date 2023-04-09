@@ -148,24 +148,30 @@ async function displayJobs() {
       });
     });
   }
+
+  const filterBox = document.querySelector("#filterBox");
+
+  clearFilters.addEventListener("click", () => {
+    const filters = document.querySelectorAll(".filter");
+
+    filters.forEach((filter) => {
+      filterBox.removeChild(filter);
+    });
+
+    jobListings.forEach((listing) => {
+      listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+    });
+
+    filtersContainer.classList.remove("flex");
+    filtersContainer.classList.add("hidden");
+    jobRoles.forEach((role) => {
+      role.addEventListener("click", addFilter);
+    });
+    jobLevels.forEach((level) => {
+      level.addEventListener("click", addFilter);
+    });
+  });
 }
 
 displayJobs();
 
-const filterBox = document.querySelector("#filterBox");
-
-clearFilters.addEventListener("click", () => {
-  const filters = document.querySelectorAll(".filter");
-  const jobListings = document.querySelectorAll(".job_listing");
-
-  filters.forEach((filter) => {
-    filterBox.removeChild(filter);
-  });
-
-  jobListings.forEach((listing) => {
-    listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-  });
-
-  filtersContainer.classList.remove("flex");
-  filtersContainer.classList.add("hidden");
-});
