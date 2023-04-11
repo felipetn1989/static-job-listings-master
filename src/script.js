@@ -94,22 +94,19 @@ async function displayJobs() {
   const jobTools = document.querySelectorAll(".job_tool");
   const langTools = document.querySelectorAll(".languages_tools");
 
-  jobRoles.forEach((role) => {
-    role.addEventListener("click", addFilter);
-  });
+  const arraysToCheck = [jobRoles, jobLevels, jobLanguages, jobTools];
 
-  jobLevels.forEach((level) => {
-    level.addEventListener("click", addFilter);
-  });
-
-  langTools.forEach((langTool) => {
-    langTool.addEventListener("click", addFilter);
+  arraysToCheck.forEach((array) => {
+    array.forEach((element) => {
+      element.addEventListener("click", addFilter);
+    });
   });
 
   function addFilter(event) {
     filtersContainer.classList.remove("hidden");
     filtersContainer.classList.add("flex");
     let filterTarget = event.target.innerHTML;
+    console.log(filterTarget);
 
     let filterSpan = document.createElement("div");
     filterSpan.setAttribute("class", "filter flex");
@@ -119,34 +116,19 @@ async function displayJobs() {
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
-      if (
-        jobRoles[index].innerHTML === filterTarget &&
-        listing.style.display !== "none"
-      ) {
-        jobRoles.forEach((role) => {
-          role.removeEventListener("click", addFilter);
-        });
-        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-      } else if (
-        jobLevels[index].innerHTML === filterTarget &&
-        listing.style.display !== "none"
-      ) {
-        jobLevels.forEach((level) => {
-          level.removeEventListener("click", addFilter);
-        });
-        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-      } else if (
-        langTools[index].innerHTML === filterTarget &&
-        listing.style.display !== "none"
-      ) {
-        console.log(langTools[index].innerHTML)
-        langTools.forEach((langTool) => {
-          langTool.removeEventListener("click", addFilter);
-        });
-        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-      } else {
-        listing.style.display = "none";
+      for (let i = 0; i < arraysToCheck.length; i++) {
+        if (
+          arraysToCheck[i][index].innerHTML === filterTarget &&
+          listing.style.display !== "none"
+        ) {
+          arraysToCheck[i].forEach((item) => {
+            item.removeEventListener("click", addFilter);
+          });
+          listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+          return;
+        }
       }
+      listing.style.display = "none";
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
@@ -176,11 +158,11 @@ async function displayJobs() {
 
     filtersContainer.classList.remove("flex");
     filtersContainer.classList.add("hidden");
-    jobRoles.forEach((role) => {
-      role.addEventListener("click", addFilter);
-    });
-    jobLevels.forEach((level) => {
-      level.addEventListener("click", addFilter);
+
+    arraysToCheck.forEach((array) => {
+      array.forEach((element) => {
+        element.addEventListener("click", addFilter);
+      });
     });
   });
 }
