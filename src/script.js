@@ -121,6 +121,7 @@ async function displayJobs() {
           arraysToCheck[i][index].innerHTML === filterTarget &&
           listing.style.display !== "none"
         ) {
+          console.log(arraysToCheck[i][index])
           arraysToCheck[i].forEach((item) => {
             item.removeEventListener("click", addFilter);
           });
