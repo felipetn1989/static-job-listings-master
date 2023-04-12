@@ -140,8 +140,6 @@ async function displayJobs() {
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
-    const filters = document.querySelectorAll(".filter");
-    const spanFilters = document.querySelectorAll(".span_filter");
 
     closeFilter.forEach((icon, index) => {
       icon.addEventListener("click", () => removeFilter(index));
@@ -153,22 +151,28 @@ async function displayJobs() {
       });
     });
 
-    console.log(filters);
-
     function removeFilter(i) {
+      let filters = document.querySelectorAll(".filter");
+      let currentFilter = filters[i].innerHTML;
+      console.log(currentFilter);
+      let spanFilters = document.querySelectorAll(".span_filter");
       filterBox.removeChild(filters[i]);
+      filters = document.querySelectorAll(".filter");
+      spanFilters = document.querySelectorAll(".span_filter");
+
+      console.log(filters.length);
 
       arraysToCheck.forEach((array) => {
         array.forEach((element) => {
-          if (element.innerHTML === spanFilters[i].innerHTML) {
+          if (element.innerHTML === currentFilter.innerHTML) {
             element.addEventListener("click", addFilter);
           }
         });
       });
 
-      jobListings.forEach((listing, index) => {
+      jobListings.forEach((listing) => {
         if (
-          !listing.classList.contains(spanFilters[i].innerHTML) &&
+          !listing.classList.contains(currentFilter.innerHTML) &&
           listing.style.display === "none"
         ) {
           listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
@@ -178,14 +182,14 @@ async function displayJobs() {
       if (filterBox.childElementCount == 0) {
         filtersContainer.classList.add("hidden");
         filtersContainer.classList.remove("flex");
+        jobListings.forEach((listing) => {
+          listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+        });
       } else {
-        console.log(filterBox.childElementCount)
+        console.log(spanFilters);
         spanFilters.forEach((filter) => {
           jobListings.forEach((listing) => {
-            if (
-              listing.classList.contains(filter.innerHTML) &&
-              listing.style.display !== "none"
-            ) {
+            if (listing.classList.contains(filter.innerHTML)) {
               listing.style.display =
                 window.innerWidth > 1024 ? "flex" : "grid";
             } else {
