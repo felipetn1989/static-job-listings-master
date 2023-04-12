@@ -17,19 +17,26 @@ async function displayJobs() {
     let devTools = [...jobList[i].tools];
     let toolsSpan = "";
 
+    let classGroup = "";
+
+    classGroup += `${jobList[i].role} `;
+    classGroup += `${jobList[i].level} `;
+
     for (let j = 0; j < devLanguages.length; j++) {
       langSpan += `<span class="job_language bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devLanguages[j]}</span>`;
+      classGroup += `${devLanguages[j]} `;
     }
 
     if (devTools.length !== 0) {
       for (let k = 0; k < devTools.length; k++) {
         toolsSpan += `<span class="job_tool bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devTools[k]}</span>`;
+        classGroup += `${devTools[k]} `;
       }
     }
 
     list.innerHTML += `
       <div
-        class="job_listing grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
+        class="job_listing ${classGroup} grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
       >
         <div
           class="${boxDecoration} absolute h-full left-0 top-0 w-[0.3125rem] bg-[#5ba4a4] rounded-l-md "
@@ -85,6 +92,8 @@ async function displayJobs() {
         <!-- Item End -->
       </div>
         `;
+
+      
   }
 
   const jobListings = document.querySelectorAll(".job_listing");
@@ -92,7 +101,6 @@ async function displayJobs() {
   const jobLevels = document.querySelectorAll(".job_level");
   const jobLanguages = document.querySelectorAll(".job_language");
   const jobTools = document.querySelectorAll(".job_tool");
-  const langTools = document.querySelectorAll(".languages_tools");
 
   const arraysToCheck = [jobRoles, jobLevels, jobLanguages, jobTools];
 
@@ -106,7 +114,6 @@ async function displayJobs() {
     filtersContainer.classList.remove("hidden");
     filtersContainer.classList.add("flex");
     let filterTarget = event.target.innerHTML;
-    console.log(filterTarget);
 
     let filterSpan = document.createElement("div");
     filterSpan.setAttribute("class", "filter flex");
@@ -116,20 +123,11 @@ async function displayJobs() {
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
-      for (let i = 0; i < arraysToCheck.length; i++) {
-        if (
-          arraysToCheck[i][index].innerHTML === filterTarget &&
-          listing.style.display !== "none"
-        ) {
-          console.log(arraysToCheck[i][index])
-          arraysToCheck[i].forEach((item) => {
-            item.removeEventListener("click", addFilter);
-          });
-          listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-          return;
-        }
+      if (listing.classList.contains(filterTarget) && listing.style.display !== "none") {
+        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+      } else {
+        listing.style.display = "none"
       }
-      listing.style.display = "none";
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
