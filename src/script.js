@@ -92,8 +92,6 @@ async function displayJobs() {
         <!-- Item End -->
       </div>
         `;
-
-      
   }
 
   const jobListings = document.querySelectorAll(".job_listing");
@@ -118,21 +116,35 @@ async function displayJobs() {
     let filterSpan = document.createElement("div");
     filterSpan.setAttribute("class", "filter flex");
     filterSpan.innerHTML = `         
-            <span class="bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">${filterTarget}</span>
+            <span class="span_filter bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">${filterTarget}</span>
             <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">`;
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing, index) => {
-      if (listing.classList.contains(filterTarget) && listing.style.display !== "none") {
+      if (
+        listing.classList.contains(filterTarget) &&
+        listing.style.display !== "none"
+      ) {
         listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
       } else {
-        listing.style.display = "none"
+        listing.style.display = "none";
       }
     });
 
-    const closeFilter = document.querySelectorAll(".close_filter");
+    arraysToCheck.forEach((array) => {
+      array.forEach((element) => {
+        if (element.innerHTML === filterTarget) {
+          element.removeEventListener("click", addFilter);
+        }
+      });
+    });
 
-    closeFilter.forEach((icon) => {
+    const closeFilter = document.querySelectorAll(".close_filter");
+    const filters = document.querySelectorAll(".filter");
+    const spanFilters = document.querySelectorAll(".span_filter");
+
+    closeFilter.forEach((icon, index) => {
+      icon.addEventListener("click", () => removeFilter(index));
       icon.addEventListener("mouseenter", () => {
         icon.style.backgroundColor = "black";
       });
@@ -140,6 +152,35 @@ async function displayJobs() {
         icon.style.backgroundColor = "#5ba4a4";
       });
     });
+
+    console.log(filters);
+
+    function removeFilter(i) {
+      filterBox.removeChild(filters[i]);
+
+      arraysToCheck.forEach((array) => {
+        array.forEach((element) => {
+          if (element.innerHTML === spanFilters[i].innerHTML) {
+            element.addEventListener("click", addFilter);
+          }
+        });
+      });
+
+      jobListings.forEach((listing, index) => {
+        if (
+          !listing.classList.contains(spanFilters[i].innerHTML)
+        ) {
+          listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+        } else {
+          listing.style.display = "none";
+        }
+      });
+
+      if (filterBox.childElementCount == 0) {
+        filtersContainer.classList.add("hidden");
+        filtersContainer.classList.remove("flex");
+      }
+    }
   }
 
   const filterBox = document.querySelector("#filterBox");
