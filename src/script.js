@@ -120,7 +120,7 @@ async function displayJobs() {
             <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">`;
     filterBox.appendChild(filterSpan);
 
-    jobListings.forEach((listing, index) => {
+    jobListings.forEach((listing) => {
       if (
         listing.classList.contains(filterTarget) &&
         listing.style.display !== "none"
@@ -168,7 +168,8 @@ async function displayJobs() {
 
       jobListings.forEach((listing, index) => {
         if (
-          !listing.classList.contains(spanFilters[i].innerHTML) && listing.style.display === "none"
+          !listing.classList.contains(spanFilters[i].innerHTML) &&
+          listing.style.display === "none"
         ) {
           listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
         }
@@ -177,6 +178,20 @@ async function displayJobs() {
       if (filterBox.childElementCount == 0) {
         filtersContainer.classList.add("hidden");
         filtersContainer.classList.remove("flex");
+      } else {
+        spanFilters.forEach((filter) => {
+          jobListings.forEach((listing) => {
+            if (
+              listing.classList.contains(filter.innerHTML) &&
+              listing.style.display !== "none"
+            ) {
+              listing.style.display =
+                window.innerWidth > 1024 ? "flex" : "grid";
+            } else {
+              listing.style.display = "none";
+            }
+          });
+        });
       }
     }
   }
