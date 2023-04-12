@@ -168,11 +168,9 @@ async function displayJobs() {
 
       jobListings.forEach((listing, index) => {
         if (
-          !listing.classList.contains(spanFilters[i].innerHTML)
+          !listing.classList.contains(spanFilters[i].innerHTML) && listing.style.display === "none"
         ) {
           listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
-        } else {
-          listing.style.display = "none";
         }
       });
 
