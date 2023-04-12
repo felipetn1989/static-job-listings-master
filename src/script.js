@@ -179,6 +179,7 @@ async function displayJobs() {
         filtersContainer.classList.add("hidden");
         filtersContainer.classList.remove("flex");
       } else {
+        console.log(filterBox.childElementCount)
         spanFilters.forEach((filter) => {
           jobListings.forEach((listing) => {
             if (
