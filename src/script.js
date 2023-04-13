@@ -36,7 +36,7 @@ async function displayJobs() {
 
     list.innerHTML += `
       <div
-        class="job_listing ${classGroup} grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:flex lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
+        class="job_listing ${classGroup} grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:grid-cols-2 lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
       >
         <div
           class="${boxDecoration} absolute h-full left-0 top-0 w-[0.3125rem] bg-[#5ba4a4] rounded-l-md "
@@ -78,7 +78,7 @@ async function displayJobs() {
         </div>
         <!-- Role -->
         <div
-          class="relative flex items-center flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem]"
+          class="relative flex items-center flex-wrap gap-x-5 gap-y-4 text-[0.8125rem] ${marginTop} mb-[-0.375rem] lg:justify-end"
         >
           <span class="job_role bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]"
             >${jobList[i].role}</span
@@ -125,7 +125,7 @@ async function displayJobs() {
         listing.classList.contains(filterTarget) &&
         listing.style.display !== "none"
       ) {
-        listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+        listing.style.display = "grid";
       } else {
         listing.style.display = "none";
       }
@@ -152,14 +152,14 @@ async function displayJobs() {
     });
 
     function removeFilter(i) {
-      console.log(i)
+      console.log(i);
       let filters = document.querySelectorAll(".filter");
       let spanFilters = document.querySelectorAll(".span_filter");
       let currentFilter = spanFilters[i].innerHTML;
       filterBox.removeChild(filters[i]);
       filters = document.querySelectorAll(".filter");
       spanFilters = document.querySelectorAll(".span_filter");
-      console.log(spanFilters)
+      console.log(spanFilters);
 
       arraysToCheck.forEach((array) => {
         array.forEach((element) => {
@@ -174,7 +174,7 @@ async function displayJobs() {
           !listing.classList.contains(currentFilter.innerHTML) &&
           listing.style.display === "none"
         ) {
-          listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+          listing.style.display = "grid";
         }
       });
 
@@ -182,18 +182,23 @@ async function displayJobs() {
         filtersContainer.classList.add("hidden");
         filtersContainer.classList.remove("flex");
         jobListings.forEach((listing) => {
-          listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+          listing.style.display = "grid";
         });
       } else {
-        spanFilters.forEach((filter) => {
-          jobListings.forEach((listing) => {
+        let matches;
+        jobListings.forEach((listing) => {
+          matches = 0;
+          spanFilters.forEach((filter) => {
             if (listing.classList.contains(filter.innerHTML)) {
-              listing.style.display =
-                window.innerWidth > 1024 ? "flex" : "grid";
-            } else {
-              listing.style.display = "none";
+              matches++;
             }
           });
+          console.log(matches);
+          if (matches == spanFilters.length) {
+            listing.style.display = "grid";
+          } else {
+            listing.style.display = "none";
+          }
         });
       }
     }
@@ -209,7 +214,7 @@ async function displayJobs() {
     });
 
     jobListings.forEach((listing) => {
-      listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
+      listing.style.display = "grid";
     });
 
     filtersContainer.classList.remove("flex");
@@ -225,3 +230,8 @@ async function displayJobs() {
 
 displayJobs();
 
+window.addEventListener("resize", () => {
+  jobListings.forEach((listing) => {
+    listing.style.display = "grid";
+  });
+});
