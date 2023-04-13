@@ -616,10 +616,6 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.resize {
-  resize: both;
-}
-
 .grid-cols-3 {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -644,6 +640,10 @@ video {
   justify-content: space-between;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .gap-10 {
   gap: 2.5rem;
 }
@@ -654,10 +654,6 @@ video {
 
 .gap-2\.5 {
   gap: 0.625rem;
-}
-
-.gap-4 {
-  gap: 1rem;
 }
 
 .gap-5 {
@@ -672,8 +668,8 @@ video {
   gap: 1.1875rem;
 }
 
-.gap-1 {
-  gap: 0.25rem;
+.gap-3 {
+  gap: 0.75rem;
 }
 
 .gap-x-5 {
@@ -816,6 +812,16 @@ video {
   padding-bottom: 2rem;
 }
 
+.py-7 {
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+}
+
+.py-\[1\.9375rem\] {
+  padding-top: 1.9375rem;
+  padding-bottom: 1.9375rem;
+}
+
 .pb-5 {
   padding-bottom: 1.25rem;
 }
@@ -830,6 +836,22 @@ video {
 
 .pr-2 {
   padding-right: 0.5rem;
+}
+
+.pt-\[1\.9375rem\] {
+  padding-top: 1.9375rem;
+}
+
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
+.pb-7 {
+  padding-bottom: 1.75rem;
+}
+
+.pb-9 {
+  padding-bottom: 2.25rem;
 }
 
 .font-sans {
@@ -990,20 +1012,12 @@ header {
     display: flex;
   }
 
-  .lg\:grid {
-    display: grid;
-  }
-
   .lg\:w-\[5\.5rem\] {
     width: 5.5rem;
   }
 
   .lg\:min-w-\[1300px\] {
     min-width: 1300px;
-  }
-
-  .lg\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
   .lg\:grid-cols-2 {
@@ -1022,6 +1036,10 @@ header {
     justify-content: space-between;
   }
 
+  .lg\:gap-4 {
+    gap: 1rem;
+  }
+
   .lg\:gap-5 {
     gap: 1.25rem;
   }
@@ -1032,10 +1050,6 @@ header {
 
   .lg\:gap-\[1\.125rem\] {
     gap: 1.125rem;
-  }
-
-  .lg\:gap-4 {
-    gap: 1rem;
   }
 
   .lg\:space-y-1 > :not([hidden]) ~ :not([hidden]) {
@@ -1054,6 +1068,12 @@ header {
     --tw-space-y-reverse: 0;
     margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+  }
+
+  .lg\:space-y-2\.5 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0.625rem * var(--tw-space-y-reverse));
   }
 
   .lg\:border-b-0 {
