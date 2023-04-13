@@ -1,8 +1,10 @@
 async function displayJobs() {
+  // function to insert the data dinamically and asign the correct functions to the elements on the page
   const response = await fetch("https://api.npoint.io/8162247b84ab695d6a5e");
   const jobList = await response.json();
 
   for (let i = 0; i < jobList.length; i++) {
+    // since the "new" and "feature badges affect the size of the elements, the code will asign different values to the CSS properties to avoid breaking the design
     let boxDecoration = jobList[i].featured ? "block" : "hidden";
     let newLogo = jobList[i].new ? "block" : "hidden";
     let gridGap = jobList[i].new ? "gap-3" : "gap-[1.1875rem]";
@@ -12,29 +14,28 @@ async function displayJobs() {
     let marginTop = jobList[i].new ? "mt-1" : "mt-[-0.375rem]";
     let headerMt = jobList[i].new ? "" : "mt-[0.3125rem] lg:mt-[0.25rem]";
 
-    let devLanguages = [...jobList[i].languages];
     let langSpan = "";
-    let devTools = [...jobList[i].tools];
     let toolsSpan = "";
-
-    let classGroup = "";
+    let classGroup = ""; //the classGroup variable will add classes to the job listing div, so that they can be used later with the filters
 
     classGroup += `${jobList[i].role} `;
     classGroup += `${jobList[i].level} `;
 
-    for (let j = 0; j < devLanguages.length; j++) {
-      langSpan += `<span class="job_language bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devLanguages[j]}</span>`;
-      classGroup += `${devLanguages[j]} `;
+    for (let j = 0; j < jobList[i].languages.length; j++) {
+      langSpan += `<span class="job_language bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${jobList[i].languages[j]}</span>`; //creating the spans that will function as the filter buttons
+      classGroup += `${jobList[i].languages[j]} `;
     }
 
-    if (devTools.length !== 0) {
-      for (let k = 0; k < devTools.length; k++) {
-        toolsSpan += `<span class="job_tool bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${devTools[k]}</span>`;
-        classGroup += `${devTools[k]} `;
+    if (jobList[i].tools.length !== 0) {
+      for (let k = 0; k < jobList[i].tools.length; k++) {
+        toolsSpan += `<span class="job_tool bg-[#eef6f6] p-1.5 w-fit rounded-md hover:cursor-pointer hover:text-white hover:bg-[#5ba4a4]">${jobList[i].tools[k]}</span>`; //creating the spans that will function as the filter buttons
+        classGroup += `${jobList[i].tools[k]} `;
       }
     }
 
-    list.innerHTML += `
+    list.innerHTML +=
+      // creating the job listing divs from the json file
+      `
       <div
         class="job_listing ${classGroup} grid ${gridGap} relative bg-white text-[#5ba4a4] font-bold py-8 px-6 rounded-md shadow-md lg:grid-cols-2 lg:items-center lg:px-10 lg:gap-6 lg:justify-between"
       >
@@ -94,13 +95,14 @@ async function displayJobs() {
         `;
   }
 
+  // creating the variables that select the listings themselves and the filter buttons
   const jobListings = document.querySelectorAll(".job_listing");
   const jobRoles = document.querySelectorAll(".job_role");
   const jobLevels = document.querySelectorAll(".job_level");
   const jobLanguages = document.querySelectorAll(".job_language");
   const jobTools = document.querySelectorAll(".job_tool");
 
-  const arraysToCheck = [jobRoles, jobLevels, jobLanguages, jobTools];
+  const arraysToCheck = [jobRoles, jobLevels, jobLanguages, jobTools]; //array containing the filter buttons, where each element is an object containing the buttons
 
   arraysToCheck.forEach((array) => {
     array.forEach((element) => {
@@ -108,12 +110,12 @@ async function displayJobs() {
     });
   });
 
-  function addFilter(event) {
+  function addFilter(event) { //when invoked, this function will only display the listings that have the features corresponding to the selected filter
     filtersContainer.classList.remove("hidden");
     filtersContainer.classList.add("flex");
     list.classList.remove("py-14");
     list.classList.add("py-28");
-    let filterTarget = event.target.innerHTML;
+    let filterTarget = event.target.innerHTML; // for example, HTML, CSS, FrontEnd, etc...
 
     let filterSpan = document.createElement("div");
     filterSpan.setAttribute("class", "filter flex");
@@ -125,7 +127,7 @@ async function displayJobs() {
     jobListings.forEach((listing) => {
       if (
         listing.classList.contains(filterTarget) &&
-        listing.style.display !== "none"
+        listing.style.display !== "none" /* does the listing contains a class with the same name as the filter selected and it is not hidden? If so, keep it displayed. Otherwise, hide it */
       ) {
         listing.style.display = "grid";
       } else {
@@ -133,7 +135,7 @@ async function displayJobs() {
       }
     });
 
-    arraysToCheck.forEach((array) => {
+    arraysToCheck.forEach((array) => { /* go throught each of the tags; if the tag is already present in the containing div, it removes the click event listener. This prevents the user being able to click on a tag indefinitely, adding an unlimited number of identical tags to the filter box above */
       array.forEach((element) => {
         if (element.innerHTML === filterTarget) {
           element.removeEventListener("click", addFilter);
@@ -143,9 +145,9 @@ async function displayJobs() {
 
     const closeFilter = document.querySelectorAll(".close_filter");
 
-    closeFilter.forEach((icon) => {
+    closeFilter.forEach((icon) => { // adding the function that will be invoked when clicking on the X icon on the filter box
       icon.addEventListener("click", removeFilter);
-      icon.addEventListener("mouseenter", () => {
+      icon.addEventListener("mouseenter", () => { // hover event on the X icon
         icon.style.backgroundColor = "black";
       });
       icon.addEventListener("mouseout", () => {
@@ -158,16 +160,16 @@ async function displayJobs() {
 
   function removeFilter(event) {
     const closeFilter = document.querySelectorAll(".close_filter");
-    const closeIconArr = Object.values(closeFilter);
-    const buttonIndex = closeIconArr.indexOf(event.target);
+    const closeIconArr = Object.values(closeFilter); // converting the object closeFilter into an Array, so the function can access the index of each element later
+    const buttonIndex = closeIconArr.indexOf(event.target); /* accessing the index of the X button that triggered the function, so that the correct filter div will be removed */
     let filters = document.querySelectorAll(".filter");
     let spanFilters = document.querySelectorAll(".span_filter");
 
     const currentFilter = spanFilters[buttonIndex].innerHTML;
 
-    filterBox.removeChild(filters[buttonIndex]);
+    filterBox.removeChild(filters[buttonIndex]); // removing the filter tag corresponding to the X icon clicked on by the user
 
-    arraysToCheck.forEach((array) => {
+    arraysToCheck.forEach((array) => { /* checking each of the filters on the job listings; if it corresponds to the removed filter tag, the click event listener is reinserted, so that the user can select it again if desired */
       array.forEach((element) => {
         if (element.innerHTML === currentFilter) {
           element.addEventListener("click", addFilter);
@@ -176,20 +178,11 @@ async function displayJobs() {
     });
 
     filters = document.querySelectorAll(".filter");
-    spanFilters = document.querySelectorAll(".span_filter");
-
-    jobListings.forEach((listing) => {
-      if (
-        !listing.classList.contains(currentFilter) &&
-        listing.style.display === "none"
-      ) {
-        listing.style.display = "grid";
-      }
-    });
+    spanFilters = document.querySelectorAll(".span_filter"); // assigning new values to those variables, to reflect the new state of the DOM
 
     if (filterBox.childElementCount == 0) {
       clearAll();
-    } else {
+    } else { // this else block will go through each of the listings, displaying only those that match all of the leftover filter tags after one of them was removed from the containing box
       let matches;
       jobListings.forEach((listing) => {
         matches = 0;
@@ -209,7 +202,7 @@ async function displayJobs() {
 
   clearFilters.addEventListener("click", clearAll);
 
-  function clearAll() {
+  function clearAll() { // this function will clear all the filters and display all of the listings
     const filters = document.querySelectorAll(".filter");
 
     filters.forEach((filter) => {
@@ -233,4 +226,4 @@ async function displayJobs() {
   }
 }
 
-displayJobs();
+displayJobs(); // invoking the async function that displays the json data
