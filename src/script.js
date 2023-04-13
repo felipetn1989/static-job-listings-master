@@ -152,19 +152,18 @@ async function displayJobs() {
     });
 
     function removeFilter(i) {
+      console.log(i)
       let filters = document.querySelectorAll(".filter");
-      let currentFilter = filters[i].innerHTML;
-      console.log(currentFilter);
       let spanFilters = document.querySelectorAll(".span_filter");
+      let currentFilter = spanFilters[i].innerHTML;
       filterBox.removeChild(filters[i]);
       filters = document.querySelectorAll(".filter");
       spanFilters = document.querySelectorAll(".span_filter");
-
-      console.log(filters.length);
+      console.log(spanFilters)
 
       arraysToCheck.forEach((array) => {
         array.forEach((element) => {
-          if (element.innerHTML === currentFilter.innerHTML) {
+          if (element.innerHTML === currentFilter) {
             element.addEventListener("click", addFilter);
           }
         });
@@ -186,7 +185,6 @@ async function displayJobs() {
           listing.style.display = window.innerWidth > 1024 ? "flex" : "grid";
         });
       } else {
-        console.log(spanFilters);
         spanFilters.forEach((filter) => {
           jobListings.forEach((listing) => {
             if (listing.classList.contains(filter.innerHTML)) {
