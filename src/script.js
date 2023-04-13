@@ -140,8 +140,9 @@ async function displayJobs() {
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
-    
+
     let filters = document.querySelectorAll(".filter");
+    let spanFilters = document.querySelectorAll(".span_filter");
 
     closeFilter.forEach((icon, index) => {
       icon.addEventListener("click", () => removeFilter(filters[index]));
@@ -154,9 +155,11 @@ async function displayJobs() {
     });
 
     function removeFilter(filterTag) {
-      let spanFilters = document.querySelectorAll(".span_filter");
-      const filtersArr = Object.values(filters)
-      let currentFilter = spanFilters[filtersArr.indexOf(filterTag)]
+      filters = document.querySelectorAll(".filter");
+      spanFilters = document.querySelectorAll(".span_filter");
+      const filtersArr = Object.values(filters);
+      let currentFilter = spanFilters[filtersArr.indexOf(filterTag)].innerHTML;
+      console.log(filtersArr.indexOf(filterTag));
       filterBox.removeChild(filterTag);
       filters = document.querySelectorAll(".filter");
       spanFilters = document.querySelectorAll(".span_filter");
