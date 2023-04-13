@@ -140,9 +140,11 @@ async function displayJobs() {
     });
 
     const closeFilter = document.querySelectorAll(".close_filter");
+    
+    let filters = document.querySelectorAll(".filter");
 
     closeFilter.forEach((icon, index) => {
-      icon.addEventListener("click", () => removeFilter(index));
+      icon.addEventListener("click", () => removeFilter(filters[index]));
       icon.addEventListener("mouseenter", () => {
         icon.style.backgroundColor = "black";
       });
@@ -151,15 +153,13 @@ async function displayJobs() {
       });
     });
 
-    function removeFilter(i) {
-      console.log(i);
-      let filters = document.querySelectorAll(".filter");
+    function removeFilter(filterTag) {
       let spanFilters = document.querySelectorAll(".span_filter");
-      let currentFilter = spanFilters[i].innerHTML;
-      filterBox.removeChild(filters[i]);
+      const filtersArr = Object.values(filters)
+      let currentFilter = spanFilters[filtersArr.indexOf(filterTag)]
+      filterBox.removeChild(filterTag);
       filters = document.querySelectorAll(".filter");
       spanFilters = document.querySelectorAll(".span_filter");
-      console.log(spanFilters);
 
       arraysToCheck.forEach((array) => {
         array.forEach((element) => {
@@ -193,7 +193,6 @@ async function displayJobs() {
               matches++;
             }
           });
-          console.log(matches);
           if (matches == spanFilters.length) {
             listing.style.display = "grid";
           } else {
@@ -229,9 +228,3 @@ async function displayJobs() {
 }
 
 displayJobs();
-
-window.addEventListener("resize", () => {
-  jobListings.forEach((listing) => {
-    listing.style.display = "grid";
-  });
-});
