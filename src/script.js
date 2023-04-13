@@ -188,10 +188,6 @@ async function displayJobs() {
         spanFilters.forEach((filter) => {
           let matches = 0;
           jobListings.forEach((listing) => {
-              if (listing.classList.contains(filter.innerHTML)) {
-                matches++;
-              }
-
             if ((matches == spanFilters.length)) {
               listing.style.display =
                 window.innerWidth > 1024 ? "flex" : "grid";
