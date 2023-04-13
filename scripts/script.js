@@ -121,7 +121,7 @@ async function displayJobs() {
     filterSpan.setAttribute("class", "filter flex");
     filterSpan.innerHTML = `         
             <span class="span_filter bg-[#eef6f6] text-[#5ba4a4] font-bold pl-1.5 pr-2 py-1.5 text-sm tracking-tighter rounded-l-sm">${filterTarget}</span>
-            <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="../images/icon-remove.svg" alt="X icon">`;
+            <img class="close_filter bg-[#5ba4a4] p-[0.5625rem] rounded-r-sm hover:cursor-pointer" src="images/icon-remove.svg" alt="X icon">`;
     filterBox.appendChild(filterSpan);
 
     jobListings.forEach((listing) => {
