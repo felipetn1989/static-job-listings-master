@@ -111,6 +111,8 @@ async function displayJobs() {
   function addFilter(event) {
     filtersContainer.classList.remove("hidden");
     filtersContainer.classList.add("flex");
+    list.classList.remove("py-14");
+    list.classList.add("py-28");
     let filterTarget = event.target.innerHTML;
 
     let filterSpan = document.createElement("div");
@@ -186,11 +188,7 @@ async function displayJobs() {
     });
 
     if (filterBox.childElementCount == 0) {
-      filtersContainer.classList.add("hidden");
-      filtersContainer.classList.remove("flex");
-      jobListings.forEach((listing) => {
-        listing.style.display = "grid";
-      });
+      clearAll();
     } else {
       let matches;
       jobListings.forEach((listing) => {
@@ -209,7 +207,9 @@ async function displayJobs() {
     }
   }
 
-  clearFilters.addEventListener("click", () => {
+  clearFilters.addEventListener("click", clearAll);
+
+  function clearAll() {
     const filters = document.querySelectorAll(".filter");
 
     filters.forEach((filter) => {
@@ -222,13 +222,15 @@ async function displayJobs() {
 
     filtersContainer.classList.remove("flex");
     filtersContainer.classList.add("hidden");
+    list.classList.add("py-14");
+    list.classList.remove("py-28");
 
     arraysToCheck.forEach((array) => {
       array.forEach((element) => {
         element.addEventListener("click", addFilter);
       });
     });
-  });
+  }
 }
 
 displayJobs();
